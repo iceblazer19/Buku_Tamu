@@ -211,18 +211,27 @@ include 'koneksi.php';
         </nav>
         <div class="main-content">
             <header>
-                <h2>To Do CRUD</h2>
+                <h2>Daftar Tamu</h2>
             </header>
             <main>
                 <section>
-                    <form method="get" class="search-bar" style="margin:24px 0 0 0; display:flex; gap:12px; align-items:center;">
+                    <form method="get" class="search-bar" style="margin:24px 0 0 0; display:flex; gap:12px; align-items:center; position:relative;">
                         <input 
                             type="text" 
                             name="search" 
+                            id="searchInput"
                             placeholder="Cari berdasarkan nama..." 
                             value="<?php echo isset($_GET['search']) ? htmlspecialchars($_GET['search']) : ''; ?>"
-                            style="padding:10px 16px; border-radius:6px; border:1px solid #ccc; font-size:1.08rem; flex:1;"
+                            style="padding:10px 36px 10px 16px; border-radius:6px; border:1px solid #ccc; font-size:1.08rem; flex:1;"
+                            autocomplete="off"
                         >
+                        <button 
+                            type="button" 
+                            id="clearSearch"
+                            style="position:absolute; right:125px; background:transparent; border:none; font-size:1.5rem; color:#888; cursor:pointer; top:50%; transform:translateY(-50%); display:none;"
+                            aria-label="Clear search"
+                            tabindex="-1"
+                        >×</button>
                         <button 
                             type="submit" 
                             style="padding:10px 22px; border-radius:6px; border:none; background:#007bff; color:#fff; font-size:1.08rem; font-weight:bold; cursor:pointer; transition:background 0.2s;"
@@ -287,5 +296,29 @@ include 'koneksi.php';
         }
     </script>
     <?php endif; ?>
+    <script>
+        const searchInput = document.getElementById('searchInput');
+        const clearBtn = document.getElementById('clearSearch');
+
+        function toggleClearBtn() {
+            if (searchInput.value.length > 0) {
+                clearBtn.style.display = 'block';
+            } else {
+                clearBtn.style.display = 'none';
+            }
+        }
+
+        if (clearBtn && searchInput) {
+            clearBtn.onclick = function(e) {
+                e.preventDefault();
+                searchInput.value = '';
+                toggleClearBtn();
+                searchInput.focus();
+            };
+            searchInput.addEventListener('input', toggleClearBtn);
+            // Initial state
+            toggleClearBtn();
+        }
+    </script>
 </body>
 </html>
