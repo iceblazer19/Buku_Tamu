@@ -133,7 +133,11 @@ include 'koneksi.php';
                         <td><?php echo htmlspecialchars($d['nama']); ?></td>
                         <td><?php echo htmlspecialchars($d['instansi']); ?></td>
                         <td><?php echo htmlspecialchars($d['tujuan']); ?></td>
-                        <td><?php echo htmlspecialchars($d['tanggal']);?>
+                        <td>
+                            <?php
+                                $datetime = $d['tanggal'] . ' ' . $d['waktu'];
+                                echo htmlspecialchars(date('d-m-Y H:i', strtotime($datetime)));
+                            ?>
                         </td>
                         <td>
                             <a href="edit.php?id=<?php echo $d['id']; ?>" title="Edit"><i class="bi bi-pencil-square"></i></a>
