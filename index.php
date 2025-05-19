@@ -262,7 +262,7 @@ include 'koneksi.php';
                                 <td>
                                     <?php
                                         $datetime = $d['tanggal'] . ' ' . $d['waktu'];
-                                        echo htmlspecialchars(date('H:i d-m-Y', strtotime($datetime)));
+                                        echo htmlspecialchars(date('d/m/Y H:i:s', strtotime($datetime)));
                                     ?>
                                 </td>
                                 <td>
