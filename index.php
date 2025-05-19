@@ -215,7 +215,7 @@ include 'koneksi.php';
             </header>
             <main>
                 <section>
-                    <form method="get" class="search-bar" style="margin:24px 0 0 0; display:flex; gap:12px; align-items:center; position:relative;">
+                    <form method="get" class="search-bar" style="margin:24px 0 0 0; display:flex; gap:12px; align-items:center; position:relative;" autocomplete="off" ;>
                         <input 
                             type="text" 
                             name="search" 
@@ -319,6 +319,15 @@ include 'koneksi.php';
             // Initial state
             toggleClearBtn();
         }
+
+        // Remove ?search=... from URL after page load (if present)
+        window.addEventListener('DOMContentLoaded', function() {
+            const url = new URL(window.location);
+            if (url.searchParams.has('search')) {
+                url.searchParams.delete('search');
+                window.history.replaceState({}, document.title, url.pathname + url.search);
+            }
+        });
     </script>
 </body>
 </html>
