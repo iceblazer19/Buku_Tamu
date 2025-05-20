@@ -5,8 +5,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nama = mysqli_real_escape_string($koneksi, $_POST['nama']);
     $instansi = mysqli_real_escape_string($koneksi, $_POST['instansi']);
     $tujuan = mysqli_real_escape_string($koneksi, $_POST['tujuan']);
-    $tanggal = mysqli_real_escape_string($koneksi, $_POST['tanggal']);
-    $waktu = mysqli_real_escape_string($koneksi, $_POST['waktu']);
+
+    // Set tanggal dan waktu otomatis
+    date_default_timezone_set('Asia/Jakarta'); // Ganti sesuai zona waktu Anda
+    $tanggal = date('Y-m-d');
+    $waktu = date('H:i:s');
 
     $query = "INSERT INTO buku_tamu (nama, instansi, tujuan, tanggal, waktu) VALUES ('$nama', '$instansi', '$tujuan', '$tanggal', '$waktu')";
     if (mysqli_query($koneksi, $query)) {
@@ -185,11 +188,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <label for="tujuan">Tujuan Kedatangan</label>
                     <textarea name="tujuan" id="tujuan" rows="2" required></textarea>
 
-                    <label for="tanggal">Tanggal Kedatangan</label>
-                    <input type="date" name="tanggal" id="tanggal" required>
-
-                    <label for="waktu">Waktu Kedatangan</label>
-                    <input type="time" name="waktu" id="waktu" required>
+                    <!-- Tanggal & Waktu tidak perlu diinput manual -->
+                    <div style="margin-bottom:18px; color:#888; font-size:0.98rem;">
+                        Tanggal dan waktu kedatangan akan diisi otomatis saat data ditambahkan.
+                    </div>
 
                     <button type="submit"><i class="bi bi-save"></i> Simpan</button>
                 </form>
