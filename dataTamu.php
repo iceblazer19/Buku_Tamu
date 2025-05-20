@@ -206,8 +206,8 @@ include 'koneksi.php';
     <div class="container-flex">
         <nav class="sidebar">
             <div class="sidebar-title">Menu</div>
-            <a href="index.php" class="sidebar-link"><i class="bi bi-house"></i> Home</a>
-            <a href="data_tamu.php" class="sidebar-link"><i class="bi bi-people"></i> Data Tamu</a>
+            <a href="home.php" class="sidebar-link"><i class="bi bi-house"></i> Home</a>
+            <a href="dataTamu.php" class="sidebar-link"><i class="bi bi-people"></i> Data Tamu</a>
         </nav>
         <div class="main-content">
             <header>

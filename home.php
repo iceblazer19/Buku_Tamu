@@ -193,7 +193,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                     <button type="submit"><i class="bi bi-save"></i> Simpan</button>
                 </form>
-                <a href="dataTamu.php" class="back-link"><i class="bi bi-arrow-left"></i> Kembali ke Data Tamu</a>
             </div>
         </div>
     </div>
