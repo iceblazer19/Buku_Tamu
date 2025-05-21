@@ -275,7 +275,12 @@ include 'koneksi.php';
                                     ?>
                                 </td>
                                 <td>
-                                    <a href="edit.php?id=<?php echo $d['id']; ?>" title="Edit"><i class="bi bi-pencil-square"></i></a>
+                                    <a href="#" class="edit-btn" 
+                                       data-id="<?php echo $d['id']; ?>"
+                                       data-nama="<?php echo htmlspecialchars($d['nama']); ?>"
+                                       data-instansi="<?php echo htmlspecialchars($d['instansi']); ?>"
+                                       data-tujuan="<?php echo htmlspecialchars($d['tujuan']); ?>"
+                                       title="Edit"><i class="bi bi-pencil-square"></i></a>
                                     <a href="delete.php?id=<?php echo $d['id']; ?>" title="Hapus" onclick="return confirm('Yakin ingin menghapus data ini?');"><i class="bi bi-trash"></i></a>
                                 </td>
                             </tr>
@@ -285,6 +290,28 @@ include 'koneksi.php';
                 </section>
             </main>
         </div>
+    </div>
+    <div id="editModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); justify-content:center; align-items:center;">
+        <form id="editForm" style="background:#fff; padding:24px; border-radius:8px; width:90%; max-width:400px;">
+            <h3 style="margin:0 0 16px 0;">Edit Data Tamu</h3>
+            <input type="hidden" id="edit_id" name="id">
+            <div style="margin-bottom:12px;">
+                <label for="edit_nama" style="display:block; margin-bottom:6px;">Nama</label>
+                <input type="text" id="edit_nama" name="nama" style="width:100%; padding:8px; border:1px solid #ccc; border-radius:4px;">
+            </div>
+            <div style="margin-bottom:12px;">
+                <label for="edit_instansi" style="display:block; margin-bottom:6px;">Instansi</label>
+                <input type="text" id="edit_instansi" name="instansi" style="width:100%; padding:8px; border:1px solid #ccc; border-radius:4px;">
+            </div>
+            <div style="margin-bottom:12px;">
+                <label for="edit_tujuan" style="display:block; margin-bottom:6px;">Tujuan</label>
+                <input type="text" id="edit_tujuan" name="tujuan" style="width:100%; padding:8px; border:1px solid #ccc; border-radius:4px;">
+            </div>
+            <div style="display:flex; gap:12px; justify-content:flex-end;">
+                <button type="button" id="closeModal" style="padding:8px 16px; border:none; background:#ccc; color:#333; border-radius:4px; cursor:pointer;">Batal</button>
+                <button type="submit" style="padding:8px 16px; border:none; background:#007bff; color:#fff; border-radius:4px; cursor:pointer;">Simpan</button>
+            </div>
+        </form>
     </div>
     <?php if (isset($_GET['deleted'])): ?>
     <script>
@@ -328,6 +355,42 @@ include 'koneksi.php';
                 window.history.replaceState({}, document.title, url.pathname + url.search);
             }
         });
+
+        document.querySelectorAll('.edit-btn').forEach(function(btn) {
+            btn.addEventListener('click', function(e) {
+                e.preventDefault();
+                // Fill modal form with data
+                document.getElementById('edit_id').value = this.dataset.id;
+                document.getElementById('edit_nama').value = this.dataset.nama;
+                document.getElementById('edit_instansi').value = this.dataset.instansi;
+                document.getElementById('edit_tujuan').value = this.dataset.tujuan;
+                document.getElementById('editModal').style.display = 'flex';
+            });
+        });
+        document.getElementById('closeModal').onclick = function() {
+            document.getElementById('editModal').style.display = 'none';
+        };
+        window.onclick = function(event) {
+            if (event.target === document.getElementById('editModal')) {
+                document.getElementById('editModal').style.display = 'none';
+            }
+        };
+
+        // Handle form submit via AJAX
+        document.getElementById('editForm').onsubmit = function(e) {
+            e.preventDefault();
+            var formData = new FormData(this);
+            fetch('edit.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(resp => resp.text())
+            .then(resp => {
+                // Optionally show success/error
+                document.getElementById('editModal').style.display = 'none';
+                location.reload(); // Reload to update table
+            });
+        };
     </script>
 </body>
 </html>
