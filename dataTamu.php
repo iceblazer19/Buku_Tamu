@@ -35,26 +35,23 @@ include 'koneksi.php';
             </header>
             <main>
                 <section>
-                    <form method="get" class="search-bar" style="margin:24px 0 0 0; display:flex; gap:12px; align-items:center; position:relative;" autocomplete="off" ;>
+                    <form method="get" class="search-bar" autocomplete="off" ;>
                         <input 
                             type="text" 
                             name="search" 
                             id="searchInput"
                             placeholder="Cari berdasarkan nama..." 
                             value="<?php echo isset($_GET['search']) ? htmlspecialchars($_GET['search']) : ''; ?>"
-                            style="padding:10px 36px 10px 16px; border-radius:6px; border:1px solid #ccc; font-size:1.08rem; flex:1;"
                             autocomplete="off"
                         >
                         <button 
                             type="button" 
                             id="clearSearch"
-                            style="position:absolute; right:125px; background:transparent; border:none; font-size:1.5rem; color:#888; cursor:pointer; top:50%; transform:translateY(-50%); display:none;"
                             aria-label="Clear search"
                             tabindex="-1"
                         >×</button>
                         <button 
                             type="submit" 
-                            style="padding:10px 22px; border-radius:6px; border:none; background:#007bff; color:#fff; font-size:1.08rem; font-weight:bold; cursor:pointer; transition:background 0.2s;"
                         >
                             <i class="bi bi-search"></i> Cari
                         </button>
