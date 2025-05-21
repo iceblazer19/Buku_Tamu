@@ -281,7 +281,7 @@ include 'koneksi.php';
                                        data-instansi="<?php echo htmlspecialchars($d['instansi']); ?>"
                                        data-tujuan="<?php echo htmlspecialchars($d['tujuan']); ?>"
                                        title="Edit"><i class="bi bi-pencil-square"></i></a>
-                                    <a href="delete.php?id=<?php echo $d['id']; ?>" title="Hapus" onclick="return confirm('Yakin ingin menghapus data ini?');"><i class="bi bi-trash"></i></a>
+                                    <a href="delete.php?id=<?php echo $d['id']; ?>" title="Hapus"><i class="bi bi-trash"></i></a>
                                 </td>
                             </tr>
                             <?php endwhile; ?>
@@ -312,6 +312,16 @@ include 'koneksi.php';
                 <button type="submit" style="padding:8px 16px; border:none; background:#007bff; color:#fff; border-radius:4px; cursor:pointer;">Simpan</button>
             </div>
         </form>
+    </div>
+    <!-- Delete Confirmation Modal -->
+    <div id="deleteModal" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.4); justify-content:center; align-items:center; z-index:9999;">
+        <div style="background:#fff; border-radius:10px; max-width:340px; width:90%; padding:28px 22px 18px 22px; box-shadow:0 2px 16px rgba(0,0,0,0.18); text-align:center;">
+            <div style="font-size:1.3rem; margin-bottom:16px;">Yakin ingin menghapus data ini?</div>
+            <div style="display:flex; gap:12px; justify-content:center; margin-top:18px;">
+                <button type="button" id="cancelDelete" style="padding:8px 18px; border:none; background:#ccc; color:#333; border-radius:4px; cursor:pointer;">Batal</button>
+                <a href="#" id="confirmDelete" style="padding:8px 18px; background:#c82333; color:#fff; border-radius:4px; text-decoration:none; font-weight:bold;">Hapus</a>
+            </div>
+        </div>
     </div>
     <?php if (isset($_GET['deleted'])): ?>
     <script>
@@ -396,6 +406,33 @@ include 'koneksi.php';
                 location.reload(); // Reload to update table
             });
         };
+
+        // Delete popup logic
+        let deleteUrl = '';
+        document.querySelectorAll('a[title="Hapus"]').forEach(function(btn) {
+            btn.addEventListener('click', function(e) {
+                e.preventDefault();
+                deleteUrl = this.getAttribute('href');
+                document.getElementById('deleteModal').style.display = 'flex';
+            });
+        });
+        document.getElementById('cancelDelete').onclick = function() {
+            document.getElementById('deleteModal').style.display = 'none';
+            deleteUrl = '';
+        };
+        document.getElementById('confirmDelete').onclick = function(e) {
+            e.preventDefault();
+            if (deleteUrl) {
+                window.location.href = deleteUrl;
+            }
+        };
+        // Prevent closing modal by clicking outside
+        document.getElementById('deleteModal').addEventListener('mousedown', function(e) {
+            if (e.target === document.getElementById('deleteModal')) {
+                e.stopPropagation();
+                e.preventDefault();
+            }
+        });
     </script>
 </body>
 </html>
