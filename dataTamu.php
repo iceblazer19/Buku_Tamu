@@ -16,6 +16,7 @@ include 'koneksi.php';
             padding: 0;
             max-width: 100vw;
             overflow-x: hidden;
+            overflow: hidden !important;
         }
         body {
             font-family: Arial, sans-serif;
@@ -33,6 +34,8 @@ include 'koneksi.php';
             width: 100vw;
             max-width: 100vw;
             overflow-x: hidden;
+            height: 100vh;
+            overflow: hidden;
         }
         .sidebar {
             width: 210px; /* was 170px */
@@ -81,6 +84,7 @@ include 'koneksi.php';
             background: #f4f6fb;
             max-width: 100vw;
             overflow-x: auto;
+            overflow: hidden;
         }
         header {
             margin: 0;
@@ -200,14 +204,99 @@ include 'koneksi.php';
                 padding: 10px 6px;
             }
         }
+        .sidebar-dark-toggle {
+            margin-top: 32px; /* was auto, now fixed higher */
+            margin-bottom: 24px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+        }
+
+        body.dark-mode {
+            background: #181a1b !important;
+            color: #e0e0e0 !important;
+        }
+        body.dark-mode .sidebar {
+            background: #23272b !important;
+            color: #e0e0e0 !important;
+            border-right: 1px solid #333 !important;
+        }
+        body.dark-mode .sidebar-link,
+        body.dark-mode .sidebar-title {
+            color: #e0e0e0 !important;
+        }
+        body.dark-mode .sidebar-link.active,
+        body.dark-mode .sidebar-link:hover {
+            background: #222c37 !important;
+            color: #4fc3f7 !important;
+            border-left: 4px solid #4fc3f7 !important;
+        }
+        body.dark-mode .main-content,
+        body.dark-mode header {
+            background: #181a1b !important;
+            color: #e0e0e0 !important;
+        }
+        body.dark-mode .container,
+        body.dark-mode table {
+            background: #23272b !important;
+            color: #e0e0e0 !important;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.4) !important;
+        }
+        body.dark-mode th {
+            background: #23272b !important;
+            color: #e0e0e0 !important;
+        }
+        body.dark-mode td a,
+        body.dark-mode .add-task-link {
+            color: #4fc3f7 !important;
+        }
+        body.dark-mode input,
+        body.dark-mode textarea,
+        body.dark-mode select {
+            background: #23272b !important;
+            color: #e0e0e0 !important;
+            border: 1px solid #444 !important;
+        }
+        body.dark-mode input:focus,
+        body.dark-mode textarea:focus {
+            border-color: #4fc3f7 !important;
+        }
+        body.dark-mode .back-link {
+            color: #4fc3f7 !important;
+        }
+        body.dark-mode #editModal > form,
+        body.dark-mode #deleteModal > div {
+            background: #23272b !important;
+            color: #e0e0e0 !important;
+        }
+        body.dark-mode #darkModeToggle {
+            background: #23272b !important;
+            color: #e0e0e0 !important;
+        }
+
+        @media (max-width: 700px) {
+            .sidebar-dark-toggle {
+                margin: 0;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="container-flex">
         <nav class="sidebar">
             <div class="sidebar-title">Menu</div>
-            <a href="home.php" class="sidebar-link"><i class="bi bi-house"></i> Home</a>
-            <a href="dataTamu.php" class="sidebar-link"><i class="bi bi-people"></i> Data Tamu</a>
+            <a href="home.php" class="sidebar-link<?php echo basename($_SERVER['PHP_SELF']) == 'home.php' ? ' active' : ''; ?>">
+                <i class="bi bi-house"></i> Home
+            </a>
+            <a href="dataTamu.php" class="sidebar-link<?php echo basename($_SERVER['PHP_SELF']) == 'dataTamu.php' ? ' active' : ''; ?>">
+                <i class="bi bi-people"></i> Data Tamu
+            </a>
+            
+            <div class="sidebar-dark-toggle">
+                <button id="darkModeToggle" style="width:90%;margin:24px auto 16px auto;display:flex;align-items:center;gap:10px;justify-content:center;padding:10px 0;border:none;border-radius:6px;background:#f4f4f4;color:#333;cursor:pointer;font-size:1rem;transition:background 0.2s;">
+                    <i class="bi bi-moon"></i> <span id="darkModeText">Dark Mode</span>
+                </button>
+            </div>
         </nav>
         <div class="main-content">
             <header>
@@ -433,6 +522,35 @@ include 'koneksi.php';
                 e.preventDefault();
             }
         });
+
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        const darkModeText = document.getElementById('darkModeText');
+        const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const savedMode = localStorage.getItem('darkMode');
+
+        function setDarkMode(on) {
+            if (on) {
+                document.body.classList.add('dark-mode');
+                darkModeText.textContent = 'Light Mode';
+                darkModeToggle.querySelector('i').className = 'bi bi-brightness-high';
+                localStorage.setItem('darkMode', 'on');
+            } else {
+                document.body.classList.remove('dark-mode');
+                darkModeText.textContent = 'Dark Mode';
+                darkModeToggle.querySelector('i').className = 'bi bi-moon';
+                localStorage.setItem('darkMode', 'off');
+            }
+        }
+
+        if (savedMode === 'on' || (savedMode === null && prefersDark)) {
+            setDarkMode(true);
+        } else {
+            setDarkMode(false);
+        }
+
+        darkModeToggle.onclick = function() {
+            setDarkMode(!document.body.classList.contains('dark-mode'));
+        };
     </script>
 </body>
 </html>
