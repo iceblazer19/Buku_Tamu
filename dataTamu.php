@@ -35,7 +35,7 @@ include 'koneksi.php';
             </header>
             <main>
                 <section>
-                    <form method="get" class="search-bar" autocomplete="off" ;>
+                    <form method="get" class="search-bar" autocomplete="off">
                         <input 
                             type="text" 
                             name="search" 
@@ -50,6 +50,13 @@ include 'koneksi.php';
                             aria-label="Clear search"
                             tabindex="-1"
                         >×</button>
+                        <select name="sort" id="sortSelect" style="height:44px; border-radius:6px; border:1px solid #ccc; font-size:1.08rem; margin:0 6px; padding:0 10px;">
+                            <option value="">Urutkan</option>
+                            <option value="nama_asc" <?php if(isset($_GET['sort']) && $_GET['sort']=='nama_asc') echo 'selected'; ?>>Nama A-Z</option>
+                            <option value="nama_desc" <?php if(isset($_GET['sort']) && $_GET['sort']=='nama_desc') echo 'selected'; ?>>Nama Z-A</option>
+                            <option value="tanggal_desc" <?php if(isset($_GET['sort']) && $_GET['sort']=='tanggal_desc') echo 'selected'; ?>>Tanggal Terbaru</option>
+                            <option value="tanggal_asc" <?php if(isset($_GET['sort']) && $_GET['sort']=='tanggal_asc') echo 'selected'; ?>>Tanggal Terlama</option>
+                        </select>
                         <button 
                             type="submit" 
                         >
@@ -73,11 +80,28 @@ include 'koneksi.php';
                             <?php
                             $no = 1;
                             $where = "";
+                            $order = "ORDER BY id DESC";
                             if (isset($_GET['search']) && $_GET['search'] !== "") {
                                 $search = mysqli_real_escape_string($koneksi, $_GET['search']);
                                 $where = "WHERE nama LIKE '%$search%'";
                             }
-                            $data = mysqli_query($koneksi, "SELECT * FROM buku_tamu $where");
+                            if (isset($_GET['sort'])) {
+                                switch ($_GET['sort']) {
+                                    case 'nama_asc':
+                                        $order = "ORDER BY nama ASC";
+                                        break;
+                                    case 'nama_desc':
+                                        $order = "ORDER BY nama DESC";
+                                        break;
+                                    case 'tanggal_asc':
+                                        $order = "ORDER BY tanggal ASC, waktu ASC";
+                                        break;
+                                    case 'tanggal_desc':
+                                        $order = "ORDER BY tanggal DESC, waktu DESC";
+                                        break;
+                                }
+                            }
+                            $data = mysqli_query($koneksi, "SELECT * FROM buku_tamu $where $order");
                             while ($d = mysqli_fetch_array($data)) :
                             ?>
                             <tr>
