@@ -297,15 +297,15 @@ include 'koneksi.php';
             <input type="hidden" id="edit_id" name="id">
             <div style="margin-bottom:12px;">
                 <label for="edit_nama" style="display:block; margin-bottom:6px;">Nama</label>
-                <input type="text" id="edit_nama" name="nama" style="width:100%; padding:8px; border:1px solid #ccc; border-radius:4px;">
+                <input type="text" id="edit_nama" name="nama" required style="width:100%; padding:8px; border:1px solid #ccc; border-radius:4px;">
             </div>
             <div style="margin-bottom:12px;">
                 <label for="edit_instansi" style="display:block; margin-bottom:6px;">Instansi</label>
-                <input type="text" id="edit_instansi" name="instansi" style="width:100%; padding:8px; border:1px solid #ccc; border-radius:4px;">
+                <input type="text" id="edit_instansi" name="instansi" required style="width:100%; padding:8px; border:1px solid #ccc; border-radius:4px;">
             </div>
             <div style="margin-bottom:12px;">
                 <label for="edit_tujuan" style="display:block; margin-bottom:6px;">Tujuan</label>
-                <input type="text" id="edit_tujuan" name="tujuan" style="width:100%; padding:8px; border:1px solid #ccc; border-radius:4px;">
+                <input type="text" id="edit_tujuan" name="tujuan" required style="width:100%; padding:8px; border:1px solid #ccc; border-radius:4px;">
             </div>
             <div style="display:flex; gap:12px; justify-content:flex-end;">
                 <button type="button" id="closeModal" style="padding:8px 16px; border:none; background:#ccc; color:#333; border-radius:4px; cursor:pointer;">Batal</button>
@@ -370,11 +370,16 @@ include 'koneksi.php';
         document.getElementById('closeModal').onclick = function() {
             document.getElementById('editModal').style.display = 'none';
         };
-        window.onclick = function(event) {
-            if (event.target === document.getElementById('editModal')) {
-                document.getElementById('editModal').style.display = 'none';
+
+        // Prevent interaction with background when modal is open
+        document.getElementById('editModal').addEventListener('mousedown', function(e) {
+            // Only close if the close button is clicked
+            if (e.target === document.getElementById('editModal')) {
+                // Do nothing (prevent accidental close)
+                e.stopPropagation();
+                e.preventDefault();
             }
-        };
+        });
 
         // Handle form submit via AJAX
         document.getElementById('editForm').onsubmit = function(e) {
