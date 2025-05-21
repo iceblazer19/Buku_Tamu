@@ -343,7 +343,7 @@ body.dark-mode #darkModeToggle {
     gap: 10px;
     align-items: stretch;
     position: relative;
-    max-width: 700px;
+    max-width: auto;
     width: 100%;
     box-sizing: border-box;
 }
@@ -390,7 +390,7 @@ body.dark-mode #darkModeToggle {
 /* X button inside input, perfectly aligned */
 #clearSearch {
     position: absolute;
-    right: 105px;
+    right: 459px;
     top: 0;
     bottom: 5;
     margin: auto 0;

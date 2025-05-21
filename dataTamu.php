@@ -40,7 +40,7 @@ include 'koneksi.php';
                             type="text" 
                             name="search" 
                             id="searchInput"
-                            placeholder="Cari berdasarkan nama..." 
+                            placeholder="Cari berdasarkan..." 
                             value="<?php echo isset($_GET['search']) ? htmlspecialchars($_GET['search']) : ''; ?>"
                             autocomplete="off"
                         >
@@ -50,6 +50,10 @@ include 'koneksi.php';
                             aria-label="Clear search"
                             tabindex="-1"
                         >×</button>
+                        <select name="search_by" id="searchBySelect" style="height:44px; border-radius:6px; border:1px solid #ccc; font-size:1.08rem; margin:0 6px; padding:0 10px;">
+                            <option value="nama" <?php if(isset($_GET['search_by']) && $_GET['search_by']=='nama') echo 'selected'; ?>>Cari Nama</option>
+                            <option value="instansi" <?php if(isset($_GET['search_by']) && $_GET['search_by']=='instansi') echo 'selected'; ?>>Cari Instansi</option>
+                        </select>
                         <select name="sort" id="sortSelect" style="height:44px; border-radius:6px; border:1px solid #ccc; font-size:1.08rem; margin:0 6px; padding:0 10px;">
                             <option value="">Urutkan</option>
                             <option value="nama_asc" <?php if(isset($_GET['sort']) && $_GET['sort']=='nama_asc') echo 'selected'; ?>>Nama A-Z</option>
@@ -60,7 +64,7 @@ include 'koneksi.php';
                         <button 
                             type="submit" 
                         >
-                            <i class="bi bi-search"></i> Cari
+                            <i class="bi bi-search"></i> <b>Cari</b>
                         </button>
                     </form>
                 </section>
@@ -81,9 +85,11 @@ include 'koneksi.php';
                             $no = 1;
                             $where = "";
                             $order = "ORDER BY id DESC";
+                            $searchBy = isset($_GET['search_by']) ? $_GET['search_by'] : 'nama';
                             if (isset($_GET['search']) && $_GET['search'] !== "") {
                                 $search = mysqli_real_escape_string($koneksi, $_GET['search']);
-                                $where = "WHERE nama LIKE '%$search%'";
+                                $column = in_array($searchBy, ['nama','instansi']) ? $searchBy : 'nama';
+                                $where = "WHERE $column LIKE '%$search%'";
                             }
                             if (isset($_GET['sort'])) {
                                 switch ($_GET['sort']) {
