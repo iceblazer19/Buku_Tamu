@@ -6,8 +6,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $instansi = mysqli_real_escape_string($koneksi, $_POST['instansi']);
     $tujuan = mysqli_real_escape_string($koneksi, $_POST['tujuan']);
 
-    // Set tanggal dan waktu otomatis
-    date_default_timezone_set('Asia/Jakarta'); // Ganti sesuai zona waktu Anda
+
+    date_default_timezone_set('Asia/Jakarta'); 
     $tanggal = date('Y-m-d');
     $waktu = date('H:i:s');
 
@@ -66,9 +66,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <label for="tujuan">Tujuan Kedatangan</label>
                     <textarea name="tujuan" id="tujuan" rows="2" required></textarea>
 
-                    <!-- Tanggal & Waktu tidak perlu diinput manual -->
                     <div style="margin-bottom:18px; color:#888; font-size:0.98rem;">
-                        Tanggal dan waktu kedatangan akan diisi otomatis saat data ditambahkan.
+                        Tanggal dan waktu kedatangan akan terisi otomatis saat data ditambahkan.
                     </div>
 
                     <button type="submit"><i class="bi bi-save"></i> Simpan</button>

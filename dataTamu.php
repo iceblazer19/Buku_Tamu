@@ -10,7 +10,6 @@ include 'koneksi.php';
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="style.css">
-    <!-- Place this at the top of <head> on every page -->
     <script>
     if (localStorage.getItem('darkMode') === '1') {
         document.documentElement.classList.add('dark-mode');
@@ -165,7 +164,6 @@ include 'koneksi.php';
             </div>
         </form>
     </div>
-    <!-- Delete Confirmation Modal -->
     <div id="deleteModal" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.4); justify-content:center; align-items:center; z-index:9999;">
         <div style="background:#fff; border-radius:10px; max-width:340px; width:90%; padding:28px 22px 18px 22px; box-shadow:0 2px 16px rgba(0,0,0,0.18); text-align:center;">
             <div style="font-size:1.3rem; margin-bottom:16px;">Yakin ingin menghapus data ini?</div>
@@ -205,11 +203,9 @@ include 'koneksi.php';
                 searchInput.focus();
             };
             searchInput.addEventListener('input', toggleClearBtn);
-            // Initial state
             toggleClearBtn();
         }
 
-        // Remove ?search=... from URL after page load (if present)
         window.addEventListener('DOMContentLoaded', function() {
             const url = new URL(window.location);
             if (url.searchParams.has('search')) {
@@ -221,7 +217,6 @@ include 'koneksi.php';
         document.querySelectorAll('.edit-btn').forEach(function(btn) {
             btn.addEventListener('click', function(e) {
                 e.preventDefault();
-                // Fill modal form with data
                 document.getElementById('edit_id').value = this.dataset.id;
                 document.getElementById('edit_nama').value = this.dataset.nama;
                 document.getElementById('edit_instansi').value = this.dataset.instansi;
@@ -233,17 +228,13 @@ include 'koneksi.php';
             document.getElementById('editModal').style.display = 'none';
         };
 
-        // Prevent interaction with background when modal is open
         document.getElementById('editModal').addEventListener('mousedown', function(e) {
-            // Only close if the close button is clicked
             if (e.target === document.getElementById('editModal')) {
-                // Do nothing (prevent accidental close)
                 e.stopPropagation();
                 e.preventDefault();
             }
         });
 
-        // Handle form submit via AJAX
         document.getElementById('editForm').onsubmit = function(e) {
             e.preventDefault();
             var formData = new FormData(this);
@@ -253,13 +244,12 @@ include 'koneksi.php';
             })
             .then(resp => resp.text())
             .then(resp => {
-                // Optionally show success/error
                 document.getElementById('editModal').style.display = 'none';
-                location.reload(); // Reload to update table
+                location.reload();
             });
         };
 
-        // Delete popup logic
+
         let deleteUrl = '';
         document.querySelectorAll('a[title="Hapus"]').forEach(function(btn) {
             btn.addEventListener('click', function(e) {
@@ -278,7 +268,7 @@ include 'koneksi.php';
                 window.location.href = deleteUrl;
             }
         };
-        // Prevent closing modal by clicking outside
+
         document.getElementById('deleteModal').addEventListener('mousedown', function(e) {
             if (e.target === document.getElementById('deleteModal')) {
                 e.stopPropagation();

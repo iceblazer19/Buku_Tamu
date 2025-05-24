@@ -1,5 +1,4 @@
 <?php
-// filepath: c:\xampp\htdocs\Buku_Tamu\delete.php
 include 'koneksi.php';
 
 if (isset($_GET['id'])) {
