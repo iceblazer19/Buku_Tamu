@@ -274,64 +274,64 @@ section {
 }
 
 /* Dark mode */
-body.dark-mode {
+html.dark-mode {
     background: #181a1b !important;
     color: #e0e0e0 !important;
 }
-body.dark-mode .sidebar {
+html.dark-mode .sidebar {
     background: #23272b !important;
     color: #e0e0e0 !important;
     border-right: 1px solid #333 !important;
 }
-body.dark-mode .sidebar-link,
-body.dark-mode .sidebar-title {
+html.dark-mode .sidebar-link,
+html.dark-mode .sidebar-title {
     color: #e0e0e0 !important;
 }
-body.dark-mode .sidebar-link.active,
-body.dark-mode .sidebar-link:hover {
+html.dark-mode .sidebar-link.active,
+html.dark-mode .sidebar-link:hover {
     background: #222c37 !important;
     color: #4fc3f7 !important;
     border-left: 4px solid #4fc3f7 !important;
 }
-body.dark-mode .main-content,
-body.dark-mode header {
+html.dark-mode .main-content,
+html.dark-mode header {
     background: #181a1b !important;
     color: #e0e0e0 !important;
 }
-body.dark-mode .container,
-body.dark-mode table {
+html.dark-mode .container,
+html.dark-mode table {
     background: #23272b !important;
     color: #e0e0e0 !important;
     box-shadow: 0 2px 12px rgba(0,0,0,0.4) !important;
 }
-body.dark-mode th {
+html.dark-mode th {
     background: #23272b !important;
     color: #e0e0e0 !important;
 }
-body.dark-mode td a,
-body.dark-mode .add-task-link {
+html.dark-mode td a,
+html.dark-mode .add-task-link {
     color: #4fc3f7 !important;
 }
-body.dark-mode input,
-body.dark-mode textarea,
-body.dark-mode select {
+html.dark-mode input,
+html.dark-mode textarea,
+html.dark-mode select {
     background: #23272b !important;
     color: #e0e0e0 !important;
     border: 1px solid #444 !important;
 }
-body.dark-mode input:focus,
-body.dark-mode textarea:focus {
+html.dark-mode input:focus,
+html.dark-mode textarea:focus {
     border-color: #4fc3f7 !important;
 }
-body.dark-mode .back-link {
+html.dark-mode .back-link {
     color: #4fc3f7 !important;
 }
-body.dark-mode #editModal > form,
-body.dark-mode #deleteModal > div {
+html.dark-mode #editModal > form,
+html.dark-mode #deleteModal > div {
     background: #23272b !important;
     color: #e0e0e0 !important;
 }
-body.dark-mode #darkModeToggle {
+html.dark-mode #darkModeToggle {
     background: #23272b !important;
     color: #e0e0e0 !important;
 }

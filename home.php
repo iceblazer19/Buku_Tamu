@@ -77,26 +77,34 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
     </div>
     <script>
-    // Dark mode toggle logic
-    const darkToggle = document.getElementById('darkModeToggle');
-    const darkText = document.getElementById('darkModeText');
-    function setDarkMode(on) {
-        if(on) {
-            document.body.classList.add('dark-mode');
-            localStorage.setItem('darkMode', '1');
-            if(darkText) darkText.textContent = 'Light Mode';
-        } else {
-            document.body.classList.remove('dark-mode');
-            localStorage.setItem('darkMode', '0');
-            if(darkText) darkText.textContent = 'Dark Mode';
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        const darkModeText = document.getElementById('darkModeText');
+        const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const savedMode = localStorage.getItem('darkMode');
+
+        function setDarkMode(on) {
+            if (on) {
+                document.body.classList.add('dark-mode');
+                darkModeText.textContent = 'Light Mode';
+                darkModeToggle.querySelector('i').className = 'bi bi-brightness-high';
+                localStorage.setItem('darkMode', 'on');
+            } else {
+                document.body.classList.remove('dark-mode');
+                darkModeText.textContent = 'Dark Mode';
+                darkModeToggle.querySelector('i').className = 'bi bi-moon';
+                localStorage.setItem('darkMode', 'off');
+            }
         }
-    }
-    if(localStorage.getItem('darkMode') === '1') setDarkMode(true);
-    if(darkToggle) {
-        darkToggle.addEventListener('click', function() {
+
+        if (savedMode === 'on' || (savedMode === null && prefersDark)) {
+            setDarkMode(true);
+        } else {
+            setDarkMode(false);
+        }
+
+        darkModeToggle.onclick = function() {
             setDarkMode(!document.body.classList.contains('dark-mode'));
-        });
-    }
+        };
     </script>
 </body>
 </html>
