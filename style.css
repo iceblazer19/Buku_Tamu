@@ -335,6 +335,10 @@ body.dark-mode #darkModeToggle {
     background: #23272b !important;
     color: #e0e0e0 !important;
 }
+html.dark-mode body {
+    background: #23272b;
+    color: #e0e0e0;
+}
 
 /* Search bar wrapper to match table width and center */
 .search-bar {

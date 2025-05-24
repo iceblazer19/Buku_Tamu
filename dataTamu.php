@@ -10,7 +10,12 @@ include 'koneksi.php';
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="style.css">
-    
+    <!-- Place this at the top of <head> on every page -->
+    <script>
+    if (localStorage.getItem('darkMode') === '1') {
+        document.documentElement.classList.add('dark-mode');
+    }
+    </script>
 </head>
 <body>
     <div class="container-flex">

@@ -23,11 +23,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <!DOCTYPE html>
 <html lang="id">
 <head>
+    
     <meta charset="UTF-8">
     <title>Input Data Tamu</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     <link rel="stylesheet" href="style.css">
-    
+    <script>
+    if (localStorage.getItem('darkMode') === '1') {
+        document.documentElement.classList.add('dark-mode');
+    }
+    </script>
 </head>
 <body>
     <div class="container-flex">
@@ -39,6 +44,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <a href="dataTamu.php" class="sidebar-link<?php echo basename($_SERVER['PHP_SELF']) == 'dataTamu.php' ? ' active' : ''; ?>">
                 <i class="bi bi-people"></i> Data Tamu
             </a>
+            <div class="sidebar-dark-toggle">
+                <button id="darkModeToggle" style="width:90%;margin:24px auto 16px auto;display:flex;align-items:center;gap:10px;justify-content:center;padding:10px 0;border:none;border-radius:6px;background:#f4f4f4;color:#333;cursor:pointer;font-size:1rem;transition:background 0.2s;">
+                    <i class="bi bi-moon"></i> <span id="darkModeText">Dark Mode</span>
+                </button>
+            </div>
         </nav>
         <div class="main-content">
             <div class="container">
@@ -66,5 +76,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
         </div>
     </div>
+    <script>
+    // Dark mode toggle logic
+    const darkToggle = document.getElementById('darkModeToggle');
+    const darkText = document.getElementById('darkModeText');
+    function setDarkMode(on) {
+        if(on) {
+            document.body.classList.add('dark-mode');
+            localStorage.setItem('darkMode', '1');
+            if(darkText) darkText.textContent = 'Light Mode';
+        } else {
+            document.body.classList.remove('dark-mode');
+            localStorage.setItem('darkMode', '0');
+            if(darkText) darkText.textContent = 'Dark Mode';
+        }
+    }
+    if(localStorage.getItem('darkMode') === '1') setDarkMode(true);
+    if(darkToggle) {
+        darkToggle.addEventListener('click', function() {
+            setDarkMode(!document.body.classList.contains('dark-mode'));
+        });
+    }
+    </script>
 </body>
 </html>
